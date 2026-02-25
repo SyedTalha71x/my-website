@@ -8,8 +8,8 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./tool
 import { cn } from "../../lib/utils";
 import { Sheet, SheetContent } from "./sheet";
 import { Button } from "./button";
-import type { Input } from "./input";
-import type { Separator } from "./separator";
+import { Input } from "./input";
+import { Separator } from "./separator";
 import { Skeleton } from "./skeleton";
 
 
