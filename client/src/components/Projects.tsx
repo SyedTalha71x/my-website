@@ -1,6 +1,6 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { Github, Shield, GitBranch, Cloud, Box} from "lucide-react";
+import { Github, Shield, GitBranch, Cloud, Box, Lock } from "lucide-react";
 
 const projects = [
   {
@@ -15,21 +15,23 @@ const projects = [
     tech: ["AWS", "Terraform", "RDS", "Cloudflare", "MySQL"],
     github: "https://github.com/SyedTalha71x/disaster-recovery-system-aws",
     icon: Shield,
-    gradient: "from-red-500 to-orange-400"
+    gradient: "from-red-500 to-orange-400",
+    badge: null
   },
   {
-    title: "Multi-Env CI/CD Pipeline",
-    desc: "Complete DevOps CI/CD solution automating software delivery across Development, Staging, and Production environments. Eliminates manual deployments, reduces errors, and accelerates delivery while maintaining quality standards.",
+    title: "Security-Hardened CI/CD Infrastructure",
+    desc: "Production-grade, security-first infrastructure on AWS Free Tier with automated security scanning in every pipeline run. Features VPC isolation, WAF protection, and 5-layer threat detection replacing GuardDuty with zero-cost CloudWatch alarms.",
     features: [
-      "GitHub Actions with automated testing & Docker builds",
-      "AWS ECR integration for container registry",
-      "Zero-downtime deployments to EC2",
-      "Environment-specific configurations"
+      "VPC with public/private subnets, Bastion host & NAT Gateway",
+      "WAF with AWS Managed Rules (SQLi, XSS, Known Bad Inputs)",
+      "CI/CD pipeline with Trivy, SonarQube & OWASP ZAP gates",
+      "CloudTrail + CloudWatch alarms for runtime threat detection"
     ],
-    tech: ["GitHub Actions", "Docker", "AWS ECR", "EC2", "Node.js"],
-    github: "https://github.com/SyedTalha71x/multi-env-cicd-pipeline",
-    icon: GitBranch,
-    gradient: "from-green-500 to-emerald-400"
+    tech: ["AWS", "Terraform", "GitHub Actions", "Trivy", "SonarQube", "OWASP ZAP", "Node.js"],
+    github: "https://github.com/SyedTalha71x/Security-Hardened-CICD-Infrastructure-AWS",
+    icon: Lock,
+    gradient: "from-cyan-500 to-blue-500",
+    badge: "Security"
   },
   {
     title: "Production EKS DevOps Pipeline",
@@ -43,7 +45,8 @@ const projects = [
     tech: ["Kubernetes", "ArgoCD", "Helm", "AWS EKS", "Terraform", "MERN"],
     github: "https://github.com/SyedTalha71x/production-eks-devops-pipeline",
     icon: Box,
-    gradient: "from-blue-500 to-cyan-400"
+    gradient: "from-blue-500 to-cyan-400",
+    badge: null
   },
   {
     title: "Production Node.js AWS Infrastructure",
@@ -57,7 +60,8 @@ const projects = [
     tech: ["AWS ECS", "Terraform", "Jenkins", "Docker", "PostgreSQL", "React"],
     github: "https://github.com/SyedTalha71x/production-nodejs-aws-infrastructure",
     icon: Cloud,
-    gradient: "from-purple-500 to-pink-400"
+    gradient: "from-purple-500 to-pink-400",
+    badge: null
   }
 ];
 
@@ -94,27 +98,35 @@ const Projects = () => {
             >
               {/* Gradient Border */}
               <div className={`absolute -inset-0.5 bg-gradient-to-r ${project.gradient} rounded-2xl opacity-0 group-hover:opacity-100 transition duration-300 blur-sm`} />
-              
+
               {/* Main Card */}
               <div className="relative glass-card p-6 h-full backdrop-blur-xl bg-background/80 border border-white/10 hover:border-white/20 transition-all duration-300 flex flex-col">
-                
+
                 {/* Header with Icon */}
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-center gap-3">
                     <div className={`p-3 rounded-xl bg-gradient-to-br ${project.gradient} bg-opacity-10`}>
                       <project.icon className="w-5 h-5 text-white" />
                     </div>
-                    <h3 className="font-bold text-lg text-foreground group-hover:text-primary transition-colors">
-                      {project.title}
-                    </h3>
+                    <div>
+                      <h3 className="font-bold text-lg text-foreground group-hover:text-primary transition-colors leading-tight">
+                        {project.title}
+                      </h3>
+                      {/* Badge */}
+                      {project.badge && (
+                        <span className={`inline-block mt-1 px-2 py-0.5 text-[9px] font-mono font-semibold rounded-full bg-gradient-to-r ${project.gradient} text-white tracking-widest uppercase`}>
+                          {project.badge}
+                        </span>
+                      )}
+                    </div>
                   </div>
-                  
+
                   {/* GitHub Link */}
                   <a
                     href={project.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2 rounded-lg bg-secondary/50 hover:bg-primary/10 text-muted-foreground hover:text-primary transition-all duration-300"
+                    className="p-2 rounded-lg bg-secondary/50 hover:bg-primary/10 text-muted-foreground hover:text-primary transition-all duration-300 shrink-0"
                     title="View Code on GitHub"
                   >
                     <Github className="w-5 h-5" />
@@ -148,12 +160,21 @@ const Projects = () => {
                   ))}
                 </div>
 
-                {/* Metrics/Stats (Optional) */}
+                {/* Metrics — Disaster Recovery */}
                 {project.title.includes("Disaster Recovery") && (
                   <div className="flex gap-3 mt-2 text-xs">
-                    <span className="px-2 py-1 rounded bg-red-500/10 text-red-400">RPO {'<'}1min</span>
-                    <span className="px-2 py-1 rounded bg-orange-500/10 text-orange-400">RTO {'<'}3min</span>
+                    <span className="px-2 py-1 rounded bg-red-500/10 text-red-400">RPO &lt;1min</span>
+                    <span className="px-2 py-1 rounded bg-orange-500/10 text-orange-400">RTO &lt;3min</span>
                     <span className="px-2 py-1 rounded bg-blue-500/10 text-blue-400">107 resources</span>
+                  </div>
+                )}
+
+                {/* Metrics — Security Project */}
+                {project.title.includes("Security-Hardened") && (
+                  <div className="flex flex-wrap gap-3 mt-2 text-xs">
+                    <span className="px-2 py-1 rounded bg-cyan-500/10 text-cyan-400">3 Security Gates</span>
+                    <span className="px-2 py-1 rounded bg-blue-500/10 text-blue-400">5 Compliance Rules</span>
+                    <span className="px-2 py-1 rounded bg-green-500/10 text-green-400">Free Tier</span>
                   </div>
                 )}
 
