@@ -1,6 +1,6 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { Github, Shield, GitBranch, Cloud, Box, Lock } from "lucide-react";
+import { Github, Shield, Cloud, Box, Lock } from "lucide-react";
 
 const projects = [
   {
